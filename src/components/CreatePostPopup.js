@@ -15,32 +15,32 @@ export default function CreatePostPopup({show, onCloseButtonClick, onCreatePost}
 
     return ReactDOM.createPortal(
         <div className="modal-wrapper">
-            <div className="modal">
+            <div >
                 <div className="body">
                     <h2>Popup Form</h2> 
                     <form className="form-container" onSubmit={handleCreatePost}> 
-                    <label className="form-label" for="id"> 
-                        Post id: 
-                    </label> 
-                    <input className="form-input" type="text" 
-                        placeholder="Enter Your Username" 
-                        id="name" name="name" required /> 
-                    <label className="form-label" for="email">
-                        Title:
-                    </label> 
-                    <input className="form-input"
-                        type="text"
-                        placeholder="Enter Your Tet"
-                        id="postText" 
-                        name="postText" required /> 
-                    <input className="form-input"
-                        type="text"
-                        placeholder="Enter Your Tet"
-                        id="postText" 
-                        name="postText" required /> 
-                    <button className="button" type="submit"> 
-                        Submit 
-                    </button> 
+                        <label className="form-label" for="id"> 
+                            Post id: 
+                        </label> 
+                        <input className="form-input" type="text" 
+                            placeholder="Enter Your Username" 
+                            id="name" name="name" required /> 
+                        <label className="form-label" for="email">
+                            Title:
+                        </label> 
+                        <input className="form-input"
+                            type="text"
+                            placeholder="Enter Your Tet"
+                            id="postText" 
+                            name="postText" required /> 
+                        <input className="form-input"
+                            type="text"
+                            placeholder="Enter Your Tet"
+                            id="postText" 
+                            name="postText" required /> 
+                        <button className="button" type="submit"> 
+                            Submit 
+                        </button> 
                     </form> 
                 </div>
                 <div className="footer">

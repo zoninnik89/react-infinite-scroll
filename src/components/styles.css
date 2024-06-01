@@ -15,6 +15,7 @@
     min-width: 500px;
     border: 1px solid black;
     overflow-y: scroll;
+    padding: 0 10px;
      
 }
 
@@ -28,8 +29,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
-    margin: 0 0.5rem 1rem 0.5rem;
+    width: 16.66rem;
 }
   
 .PostContainer img {
@@ -37,7 +37,7 @@
     margin-bottom: 0.5rem;
     height: 350px; 
     object-fit: none;
-    max-width: 100%;
+    width: 100%;
   }
 
 .PostContainer h2 {
@@ -58,12 +58,12 @@
 
 .PostContainer h3 {
     margin: 0;
-    margin-bottom: 0.5rem;
-    margin-right: 0.5rem;
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-weight: 650;
+    font-size: 33px;
+    text-align: center;
     display: inline-block;
     padding-right: 5px;
+    
 }
 
 .LikeButton {
@@ -195,6 +195,8 @@
       Source:
       https://codepen.io/chriscoyier/pen/gOpeMRL
     */
+
+
   
     background: linear-gradient(135deg, var(--bg) 25%, transparent 25%) -50px 0,
       linear-gradient(225deg, var(--bg) 25%, transparent 25%) -50px 0,
@@ -235,7 +237,7 @@
     width: 100px;
   }
   
-  .button:after {
+  /* .button:after {
     background-clip: padding-box;
     background-color: #1cb0f6;
     border: solid transparent;
@@ -248,7 +250,7 @@
     right: 0;
     top: 0;
     z-index: -1;
-  }
+  } */
   
   .button:main,
   .button:focus {
