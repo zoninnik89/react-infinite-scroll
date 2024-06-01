@@ -4,7 +4,6 @@ import postsMockData from './mockData.js';
 import './styles.css'; 
 
 import useModal from "./useModal";
-import { Button } from 'react-bootstrap';
 import CreatePostPopup from './CreatePostPopup';
 
 const itemHeight = 492; // Adjustable global variable
@@ -35,7 +34,8 @@ export default function Feed() {
       }
     }
     getPosts();
-  }, []);
+    console.log(data);
+  }, [data]);
 
   const [scrollTop, setScrollTop] = useState(0);
   const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
@@ -75,7 +75,7 @@ export default function Feed() {
               transform: `translateY(${startIndex * itemHeight}px)`,
             }}
           >
-            {posts.map(item=><Post key={item.id} postData={item} createPost={setData}/>)}
+            {posts.map(item=><Post key={item.id} postData={item} />)}
           </div>
         </div>
       </div>
