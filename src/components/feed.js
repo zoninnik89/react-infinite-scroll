@@ -9,23 +9,24 @@ import CreatePostPopup from './CreatePostPopup';
 const itemHeight = 492; // Adjustable global variable
 const windowHeight = 650; // Adjustable global variable
 const overscan = 4; // Number of extra items to render before the visible range
+let coursor = 0
 
-const url = 'https://localhost:8000/';
-const user = '1';
-const endpoint = `${url}${user}`;
+const url = 'https://10.59.62.240:3001/infscrolldata?coursor=0&limit=10';
 
 export default function Feed() {
 
-  const [data, setData] = useState(postsMockData);
-  const [numberOfItems, setNumberOfItems] = useState(data.length);
-
+  const [data, setData] = useState(null);
+  const [numberOfItems, setNumberOfItems] = useState(10);
+  debugger
   useEffect(() => {
+    debugger
     const getPosts = async () => {
       try {
-        const response = await fetch(endpoint)
+        const response = await fetch(url)
         if (response.ok) {
           const jsonResponse = await response.json()
           setData(jsonResponse)
+          console.log(data)
         } else {
           console.error(response.statusText)
         }
@@ -34,52 +35,56 @@ export default function Feed() {
       }
     }
     getPosts();
-    console.log(data);
-  }, [data]);
+
+  }, []);
 
   const [scrollTop, setScrollTop] = useState(0);
   const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
   let renderedNodesCount = Math.floor(windowHeight / itemHeight) + 2 * overscan;
   renderedNodesCount = Math.min(numberOfItems - startIndex, renderedNodesCount);
-
-  const posts = data.slice(startIndex, startIndex+renderedNodesCount);
-
+  console.log(`start index is ${startIndex}, nodes count is ${renderedNodesCount}`);
+  const posts = data === null ? [] : data.slice(startIndex, startIndex+renderedNodesCount);
+  console.log(`Posts are ${posts}`)
 
   const [isShowingModal, toggleModal] = useModal(null);
 
-  return (
-    <>
-      <CreatePostPopup
-        show={isShowingModal} 
-        onCloseButtonClick={toggleModal} 
-        onCreatePost={setData}
-        numberOfItems={setNumberOfItems}
-      /> 
-      <button 
-        className='button button-smaller'
-        onClick={toggleModal}>
-          Create post
-      </button>
-      <div className='Feed'
-        style={{ height: `${windowHeight}px` }}
-        onScroll={(e) => {
-          setScrollTop(e.currentTarget.scrollTop);
-        }}
-      >
-        <div
-          style={{
-            height: `${numberOfItems * itemHeight}px`,
-          }}
-        >
-          <div
-            style={{
-              transform: `translateY(${startIndex * itemHeight}px)`,
+  if (data === null) {
+    return "Loading..."
+  } else {
+    return (
+        <>
+          <CreatePostPopup
+            show={isShowingModal} 
+            onCloseButtonClick={toggleModal} 
+            onCreatePost={setData}
+            numberOfItems={setNumberOfItems}
+          /> 
+          <button 
+            className='button button-smaller'
+            onClick={toggleModal}>
+              Create post
+          </button>
+          <div className='Feed'
+            style={{ height: `${windowHeight}px` }}
+            onScroll={(e) => {
+              setScrollTop(e.currentTarget.scrollTop);
             }}
           >
-            {posts.map(item=><Post key={item.id} postData={item} />)}
+            <div
+              style={{
+                height: `${numberOfItems * itemHeight}px`,
+              }}
+            >
+              <div
+                style={{
+                  transform: `translateY(${startIndex * itemHeight}px)`,
+                }}
+              >
+                {posts.map(item=><Post key={item.id} postData={item} />)}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </>
-  );
+        </>
+      );
+    }
 }
