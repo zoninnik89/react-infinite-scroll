@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Post from './post';
 import postsMockData from './mockData.js';
-import styles from './styles.css';
+import './styles.css'; 
+
+import useModal from "./useModal";
+import { Button } from 'react-bootstrap';
+import CreatePostPopup from './CreatePostPopup';
 
 const itemHeight = 492; // Adjustable global variable
-const windowHeight = 700; // Adjustable global variable
+const windowHeight = 650; // Adjustable global variable
 const overscan = 4; // Number of extra items to render before the visible range
 const numberOfItems = 30;
 
@@ -40,8 +44,21 @@ export default function Feed() {
 
   const posts = data.slice(startIndex, startIndex+renderedNodesCount);
 
+
+  const [isShowingModal, toggleModal] = useModal(null);
+
   return (
     <>
+      <CreatePostPopup
+        show={isShowingModal} 
+        onCloseButtonClick={toggleModal} 
+        onCreatePost={setData}
+      /> 
+      <button 
+        className='button button-smaller'
+        onClick={toggleModal}>
+          Create post
+      </button>
       <div className='Feed'
         style={{ height: `${windowHeight}px` }}
         onScroll={(e) => {

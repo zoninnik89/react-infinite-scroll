@@ -1,19 +1,11 @@
 import React, {useState} from 'react';
-import Like from './like';
+import LikeButton from './like';
 import './styles.css'; 
 
-export default function Post({postData, createPost}) {
+
+export default function Post({postData}) {
     const [post, setPost] = useState(postData)
-
     const [likes, setLikes] = useState(0)
-
-    const handleCreatePost = (event) => {
-        createPost(posts => ({...posts, event.target.value}))
-    }
-
-    const handleOpenCreatePopup = () => {
-        <CreatePostPopup />
-    }
 
     return (
         <div className='PostContainer'>
@@ -22,10 +14,9 @@ export default function Post({postData, createPost}) {
             <div className='imageContainer'>
                 <img src={post.imageSrc } />
             </div>
-            <span className='Likes'>
+            <span className='Utils'>
                 <h3>{likes}</h3>
-                <Like onLikePost={setLikes} />
-                <CreatePost onCreatePost={handleOpenCreatePopup} />
+                <LikeButton onLikePost={setLikes} />
             </span>
         </div>
     )

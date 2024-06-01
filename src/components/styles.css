@@ -28,7 +28,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 16.66rem;
+    width: 100%;
     margin: 0 0.5rem 1rem 0.5rem;
 }
   
@@ -37,7 +37,7 @@
     margin-bottom: 0.5rem;
     height: 350px; 
     object-fit: none;
-    width: 240%;
+    max-width: 100%;
   }
 
 .PostContainer h2 {
@@ -59,6 +59,8 @@
 .PostContainer h3 {
     margin: 0;
     margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    font-size: 1.8rem;
     font-weight: 600;
     display: inline-block;
     padding-right: 5px;
@@ -70,13 +72,21 @@
     border-radius: 5px;
     border: 5p;
     
-
 }
 
-.Likes {
+.CreatePostButton {
+    color: rgb(255, 255, 255);
+    background-color: rgb(141, 141, 188);
+    border-radius: 5px;
+    border: 5p;
+    
+}
+
+.Utils {
     display: flex; 
 	flex-direction: row; 
-	flex-wrap: wrap; 
+	flex-wrap: nowrap; 
+    width: 100%;
 }
 
 
@@ -92,34 +102,6 @@
     font-family: Arial, sans-serif; 
 } 
 
-.btn-open-popup { 
-    padding: 12px 24px; 
-    font-size: 18px; 
-    background-color: green; 
-    color: #fff; 
-    border: none; 
-    border-radius: 8px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-} 
-
-.btn-open-popup:hover { 
-    background-color: #4caf50; 
-} 
-
-.overlay-container { 
-    display: none; 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background: rgba(0, 0, 0, 0.6); 
-    justify-content: center; 
-    align-items: center; 
-    opacity: 0; 
-    transition: opacity 0.3s ease; 
-} 
 
 .popup-box { 
     background: #fff; 
@@ -130,7 +112,7 @@
     text-align: center; 
     opacity: 0; 
     transform: scale(0.8); 
-    animation: fadeInUp 0.5s ease-out forwards; 
+
 } 
 
 .form-container { 
@@ -198,3 +180,149 @@
     display: flex; 
     opacity: 1; 
 } 
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  
+  body {
+    /*
+      Source:
+      https://codepen.io/chriscoyier/pen/gOpeMRL
+    */
+  
+    background: linear-gradient(135deg, var(--bg) 25%, transparent 25%) -50px 0,
+      linear-gradient(225deg, var(--bg) 25%, transparent 25%) -50px 0,
+      linear-gradient(315deg, var(--bg) 25%, transparent 25%),
+      linear-gradient(45deg, var(--bg) 25%, transparent 25%);
+    background-size: 100px 100px;
+
+  }
+  
+  .App {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .button {
+    appearance: button;
+    background-color: #1899d6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 10px;
+    margin: 0;
+    padding: 10px 6px;
+    text-align: center;
+    text-transform: uppercase;
+    transform: translateZ(0);
+    user-select: none;
+    -webkit-user-select: none;
+    width: 100px;
+  }
+  
+  .button:after {
+    background-clip: padding-box;
+    background-color: #1cb0f6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 5px;
+    bottom: -4px;
+    content: '';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+  }
+  
+  .button:main,
+  .button:focus {
+    user-select: auto;
+  }
+  
+  .button:hover:not(:disabled) {
+    filter: brightness(1.1);
+    -webkit-filter: brightness(1.1);
+  }
+  
+  .button:active:after {
+    background-color: #1899d6;
+  }
+  
+  .button-smaller {
+    display: block;
+    background-color: red;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 200px;
+  }
+  
+  .button-smaller:after {
+    background-color: rgb(255, 79, 79);
+  }
+  
+  .modal {
+    position: relative;
+    background-color: #fff;
+    width: 500px;
+    height: 200px;
+    border: 1px solid rgb(179, 179, 179);
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 0 15px 160px;
+  }
+  
+  .modal .footer {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(243, 244, 246);
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    padding: 10px 1.5rem;
+    flex-direction: row-reverse;
+  }
+  
+  .modal-wrapper {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(107, 114, 128, 0.5);
+    z-index: 9;
+    width: 100%;
+    min-height: 100vh;
+  }
+  
+  .modal button {
+    border-radius: 0.375rem;
+    border-style: none;
+    background: rgb(220, 38, 38);
+    padding: 10px;
+    color: #fff;
+    line-height: 1.25rem;
+    cursor: pointer;
+  }
+  
+  .modal .body {
+    padding: 20px;
+  }
