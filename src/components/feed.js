@@ -9,7 +9,6 @@ import CreatePostPopup from './CreatePostPopup';
 const itemHeight = 492; // Adjustable global variable
 const windowHeight = 650; // Adjustable global variable
 const overscan = 4; // Number of extra items to render before the visible range
-const numberOfItems = 30;
 
 const url = 'https://localhost:8000/';
 const user = '1';
@@ -18,6 +17,7 @@ const endpoint = `${url}${user}`;
 export default function Feed() {
 
   const [data, setData] = useState(postsMockData);
+  const [numberOfItems, setNumberOfItems] = useState(data.length);
 
   useEffect(() => {
     const getPosts = async () => {
@@ -53,6 +53,7 @@ export default function Feed() {
         show={isShowingModal} 
         onCloseButtonClick={toggleModal} 
         onCreatePost={setData}
+        numberOfItems={setNumberOfItems}
       /> 
       <button 
         className='button button-smaller'

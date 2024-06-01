@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
 import './styles.css'; 
 import ReactDOM from 'react-dom';
+import { SubmitHandler, useForm } from 'react-hook-form'; 
+import { numberOfItems } from './feed';
 
-export default function CreatePostPopup({show, onCloseButtonClick, onCreatePost}) {
+export default function CreatePostPopup({show, onCloseButtonClick, onCreatePost, numberOfItems}) {
 
     const [isSubmit, setSubmit] = useState(false);
 
-    function handleCreatePost(event) {
-        event.preventDefault();
-        const content = new FormData(event.currentTarget);
-        console.log(content);
+    const { register, handleSubmit } = useForm();
+
+    function onSubmit (data) {
         onCreatePost(posts => [...posts, {
-            id: content.postId,
-            title: content.postTitle,
-            text: content.postText,
-            imgSrc: content.imageSrc,
+            id: data.id,
+            title: data.title,
+            text: data.text,
+            imgSrc: data.imageSrc,
         }]);
+        numberOfItems(prev => prev+1);
         setSubmit(true);
     }
 
@@ -33,37 +35,40 @@ export default function CreatePostPopup({show, onCloseButtonClick, onCreatePost}
                     <div className="modal">
                         <div className="body">
                             <h2>Popup Form</h2> 
-                            <form className="form-container" onSubmit={handleCreatePost}> 
+                            <form className="form-container" onSubmit={handleSubmit(onSubmit)}> 
                                 <label className="form-label" for="id"> 
                                     Post id: 
                                 </label> 
-                                <input className="form-input" type="text" 
+                                <input {...register('id')} className="form-input" type="text" 
                                     placeholder="Enter Post ID" 
-                                    id="id" name="postId" required /> 
+                                    id="id" required /> 
                                 <label className="form-label" for="title">
                                     Title:
                                 </label> 
-                                <input className="form-input"
+                                <input {...register('title')} 
+                                    className="form-input"
                                     type="text"
                                     placeholder="Enter Your Title"
                                     id="title" 
-                                    name="postTitle" required /> 
+                                    required /> 
                                 <label className="form-label" for="text">
                                     Text:
                                 </label> 
-                                <input className="form-input"
+                                <input {...register('text')}  
+                                    className="form-input"
                                     type="text"
                                     placeholder="Enter Your Text"
                                     id="text" 
-                                    name="postText" required /> 
+                                    required /> 
                                 <label className="form-label" for="imageSrc">
                                     Image/Video:
                                 </label> 
-                                <input className="form-input"
+                                <input {...register('imageSrc')}  
+                                    className="form-input"
                                     type="text"
                                     placeholder="Enter Your Text"
                                     id="imageSrc" 
-                                    name="imageSrc" required /> 
+                                    required /> 
                                 <button className="button" type="submit"> 
                                     Submit 
                                 </button> 
