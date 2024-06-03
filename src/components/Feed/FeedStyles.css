@@ -1,0 +1,115 @@
+.Feed {
+    /* grid-column: 2/3; */
+    background-color: white;
+    min-width: 500px;
+    border: 1px solid black;
+    overflow-y: scroll;
+    padding: 0 10px;
+     
+}
+
+.PostContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+  
+.PostContainer img {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    height: 350px; 
+    object-fit: none;
+    width: 100%;
+  }
+
+.PostContainer h2 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.PostContainer p {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1rem;
+    margin: 0;
+}
+
+.PostContainer h3 {
+    margin: 0;
+    font-weight: 650;
+    font-size: 33px;
+    text-align: center;
+    display: inline-block;
+    padding-right: 5px;
+    
+}
+
+.LikeButton {
+    color: rgb(255, 255, 255);
+    background-color: rgb(141, 141, 188);
+    border-radius: 5px;
+    border: 5p;
+    
+}
+
+.CreatePostButton {
+    color: rgb(255, 255, 255);
+    background-color: rgb(141, 141, 188);
+    border-radius: 5px;
+    border: 5p;
+    
+}
+
+.button {
+    appearance: button;
+    background-color: #1899d6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 10px;
+    margin: 0;
+    padding: 10px 6px;
+    text-align: center;
+    text-transform: uppercase;
+    transform: translateZ(0);
+    user-select: none;
+    -webkit-user-select: none;
+    width: 100px;
+  }
+  
+  .button:main,
+  .button:focus {
+    user-select: auto;
+  }
+  
+  .button:hover:not(:disabled) {
+    filter: brightness(1.1);
+    -webkit-filter: brightness(1.1);
+  }
+  
+  .button:active:after {
+    background-color: #1899d6;
+  }
+  
+  .button-smaller {
+    display: block;
+    background-color: red;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 200px;
+  }
+  
+  .button-smaller:after {
+    background-color: rgb(255, 79, 79);
+  }

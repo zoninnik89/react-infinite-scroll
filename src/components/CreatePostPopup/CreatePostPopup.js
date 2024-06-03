@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import './styles.css'; 
+import './CreatePostPopupStyles.css'; 
 import ReactDOM from 'react-dom';
 import { SubmitHandler, useForm } from 'react-hook-form'; 
-import { numberOfItems } from './feed';
 
-export default function CreatePostPopup({show, onCloseButtonClick, onCreatePost, numberOfItems}) {
+export default function CreatePostPopup({show, onCloseButtonClick}) {
 
     const [isSubmit, setSubmit] = useState(false);
     const { register, handleSubmit } = useForm();
@@ -21,12 +20,7 @@ export default function CreatePostPopup({show, onCloseButtonClick, onCreatePost,
       }
 
     async function onSubmit (data) {
-        // onCreatePost(posts => [...posts, {
-        //     id: data.id,
-        //     title: data.title,
-        //     text: data.text,
-        //     imgSrc: data.imageSrc,
-        // }]);
+
         const post = JSON.stringify({
             id: data.id,
             title: data.title,
@@ -55,7 +49,7 @@ export default function CreatePostPopup({show, onCloseButtonClick, onCreatePost,
         }
 
         const file = data.fileSrc[0];
-        const chunkSize = 1024;
+        const chunkSize = 1024*1024;
 
         if (file) {
             const totalChunks = Math.ceil(file.size/chunkSize);
@@ -64,7 +58,7 @@ export default function CreatePostPopup({show, onCloseButtonClick, onCreatePost,
                 const blobSlice = file.slice(start, end);
 
                 try {
-                    const response = await fetch('https://10.59.62.240:3001/send', {
+                    const response = await fetch(`https://10.59.62.240:3001/file?name=${file.name}`, {
                         method: 'POST',
                         body: blobSlice,
                         headers: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.css'; 
+import './FeedStyles.css'; 
 
 export default function LikeButton(props) {
     const clickHandler = (e) => {
