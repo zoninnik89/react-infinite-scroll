@@ -1,22 +1,34 @@
-import React, {useState} from 'react';
-import useModal from "../CreatePostPopup/useModal";
+import React from 'react';
 import CreatePostPopup from '../CreatePostPopup/CreatePostPopup.js';
 import './CreatePostBlockStyles.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { displayCreatePostPopup } from '../../store/createPopupSlice.js'
 
 export default function CreatePostBlock() {
-    const [isShowingModal, toggleModal] = useModal(null);
-
-    return (
-        <div>
-            <CreatePostPopup
-            show={isShowingModal} 
-            onCloseButtonClick={toggleModal} 
-            /> 
-            <button 
-            className='button button-smaller'
-            onClick={toggleModal}>
-                Create post
-            </button>
-        </div>
-    )
+    const dispatch = useDispatch();
+    const displayPopup = () => dispatch(displayCreatePostPopup());
+    const displayPopUp = useSelector(state => state.createPostPopup.showCreatePostPopup)
+    
+    if (displayPopUp == 'true') {
+        return (
+            <div>
+                <CreatePostPopup /> 
+                <button 
+                className='button button-smaller'
+                onClick={displayPopup}>
+                    Create post
+                </button>
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <button 
+                className='button button-smaller'
+                onClick={displayPopup}>
+                    Create post
+                </button>
+            </div>
+        )
+    }
 }

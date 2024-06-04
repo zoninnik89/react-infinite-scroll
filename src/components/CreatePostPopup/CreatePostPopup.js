@@ -2,22 +2,24 @@ import React, {useState} from 'react';
 import './CreatePostPopupStyles.css'; 
 import ReactDOM from 'react-dom';
 import { SubmitHandler, useForm } from 'react-hook-form'; 
+import { useDispatch } from 'react-redux';
+import { hideCreatePostPopup } from '../../store/createPopupSlice.js'
 
-export default function CreatePostPopup({show, onCloseButtonClick}) {
+export default function CreatePostPopup() {
 
-    const [isSubmit, setSubmit] = useState(false);
+    const [isSubmit, setSubmit] = useState('false');
     const { register, handleSubmit } = useForm();
+    
+    const dispatch = useDispatch();
+    const hidePopup = () => dispatch(hideCreatePostPopup());
+
+    function handleClose() {
+        hidePopup();
+        setSubmit('false');
+        return
+    }
 
     const url = 'https://10.59.62.240:3001/send';
-    const responseField = document.querySelector('#responseField');
-
-    function renderResponse(res) {
-        if (res.errors){
-          responseField.innerHTML = "<p>Sorry, couldn't upload your post.</p><p>Try again.</p>";
-        } else {  
-          responseField.innerHTML = `<p>Your post was uploaded! </p>`;
-        }
-      }
 
     async function onSubmit (data) {
 
@@ -39,7 +41,6 @@ export default function CreatePostPopup({show, onCloseButtonClick}) {
 
             if (response.ok) {
                 const jsonResponse = await response.json();
-                renderResponse(jsonResponse);
             } else {
                 console.error(response.statusText)
             }
@@ -69,7 +70,6 @@ export default function CreatePostPopup({show, onCloseButtonClick}) {
         
                     if (response.ok) {
                         const jsonResponse = await response.json();
-                        renderResponse(jsonResponse);
                     } else {
                         console.error(response.statusText)
                     }
@@ -86,82 +86,74 @@ export default function CreatePostPopup({show, onCloseButtonClick}) {
             }
         }
 
-        setSubmit(true);
+        setSubmit('true');
     }
 
-    function handleClose() {
-        onCloseButtonClick();
-        setSubmit(false);
-    }
 
-    if (!show) {
-        return null;
+    if (isSubmit == 'false') {
+        return ReactDOM.createPortal(
+            <div className="modal-wrapper">
+                <div className="modal">
+                    <div className="body">
+                        <h2>Popup Form</h2> 
+                        <form className="form-container" onSubmit={handleSubmit(onSubmit)}> 
+                            <label className="form-label" htmlFor="id"> 
+                                Post id: 
+                            </label> 
+                            <input {...register('id')} className="form-input" type="text" 
+                                placeholder="Enter Post ID" 
+                                id="id" required /> 
+                            <label className="form-label" htmlFor="title">
+                                Title:
+                            </label> 
+                            <input {...register('title')} 
+                                className="form-input"
+                                type="text"
+                                placeholder="Enter Your Title"
+                                id="title" 
+                                required /> 
+                            <label className="form-label" htmlFor="text">
+                                Text:
+                            </label> 
+                            <input {...register('text')}  
+                                className="form-input"
+                                type="text"
+                                placeholder="Enter Your Text"
+                                id="text" 
+                                required /> 
+                            <label className="form-label" htmlFor="imageSrc">
+                                Image/Video:
+                            </label> 
+                            <input {...register('fileSrc')}  
+                                className="form-input"
+                                input type="file" 
+                                id="fileSrc" 
+                                required /> 
+                            <button className="button" type="submit"> 
+                                Submit 
+                            </button> 
+                        </form> 
+                    </div>
+                    <div className="footer">
+                        <button onClick={handleClose}>Close Modal</button>
+                    </div>
+                </div>
+            </div>
+            , document.body
+        );
     } else {
-        if (!isSubmit) {
-            return ReactDOM.createPortal(
-                <div className="modal-wrapper">
-                    <div className="modal">
-                        <div className="body">
-                            <h2>Popup Form</h2> 
-                            <form className="form-container" onSubmit={handleSubmit(onSubmit)}> 
-                                <label className="form-label" for="id"> 
-                                    Post id: 
-                                </label> 
-                                <input {...register('id')} className="form-input" type="text" 
-                                    placeholder="Enter Post ID" 
-                                    id="id" required /> 
-                                <label className="form-label" for="title">
-                                    Title:
-                                </label> 
-                                <input {...register('title')} 
-                                    className="form-input"
-                                    type="text"
-                                    placeholder="Enter Your Title"
-                                    id="title" 
-                                    required /> 
-                                <label className="form-label" for="text">
-                                    Text:
-                                </label> 
-                                <input {...register('text')}  
-                                    className="form-input"
-                                    type="text"
-                                    placeholder="Enter Your Text"
-                                    id="text" 
-                                    required /> 
-                                <label className="form-label" for="imageSrc">
-                                    Image/Video:
-                                </label> 
-                                <input {...register('fileSrc')}  
-                                    className="form-input"
-                                    input type="file" 
-                                    id="fileSrc" 
-                                    required /> 
-                                <button className="button" type="submit"> 
-                                    Submit 
-                                </button> 
-                            </form> 
-                        </div>
-                        <div className="footer">
-                            <button onClick={handleClose}>Close Modal</button>
-                        </div>
+        return (
+            <div className="modal-wrapper">
+                <div className="modal">
+                    <div className="body">
+                        <h2>Your post was created</h2> 
+                    </div>
+                    <div className="footer">
+                        <button onClick={handleClose}>Close Modal</button>
                     </div>
                 </div>
-                , document.body
-            );
-        } else {
-            return (
-                <div className="modal-wrapper">
-                    <div className="modal">
-                        <div className="body">
-                            <h2>Your post was created</h2> 
-                        </div>
-                        <div className="footer">
-                            <button onClick={handleClose}>Close Modal</button>
-                        </div>
-                    </div>
-                </div>
-            )
-        }
+            </div>
+        )
     }
-
 }
+
