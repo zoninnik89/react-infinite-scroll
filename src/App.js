@@ -2,6 +2,7 @@ import Feed from './components/Feed/feed';
 import MessagesStream from './components/Messages/messagesStream';
 import './components/styles.css'; 
 import CreatePostBlock from './components/CreatePostBlock/CreatePostBlock';
+import WebSocketContainer from './components/WebSocket/WebSocketContainer';
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
         <div className='Layout'>
           <Feed className='Feed' />
         </div>
-        <MessagesStream className='Right_part' />
+        <MessagesStream />
+        <WebSocketContainer />
     </div>
   );
 }

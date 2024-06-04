@@ -56,6 +56,7 @@ export default function CreatePostPopup({show, onCloseButtonClick}) {
 
             const sendChunk = async (start, end) =>{
                 const blobSlice = file.slice(start, end);
+                console.log(blobSlice)
 
                 try {
                     const response = await fetch(`https://10.59.62.240:3001/file?name=${file.name}`, {
