@@ -1,65 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import Post from './post.js';
+import React, { useEffect } from 'react';
 import './FeedStyles.css'; 
-
-import { Virtuoso } from 'react-virtuoso'
-
-let coursor = 0
-
-const url = 'https://10.59.62.240:3001/infscrolldata?coursor=0&limit=10';
+import { fetchPosts } from '../../store/postsSlice.js'
+import { useDispatch, useSelector } from 'react-redux';
+import VirtualList from './virtualList';
 
 export default function Feed() {
 
-  const [data, setData] = useState([]);
-    
-  const getPosts = async () => {
-    try {
-      const response = await fetch(url)
-      if (response.ok) {
-        const jsonResponse = await response.json()
-        
-        setData((data) => [...data, ...jsonResponse])
-
-      } else {
-        console.error(response.statusText)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.posts.posts)
 
   useEffect(() => {
-    const timeout = getPosts()
-    return () => clearTimeout(timeout)
-  }, [])
+    dispatch(fetchPosts());
 
-  const Footer = () => {
-    return (
-      <div
-        style={{
-          padding: '2rem',
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        Loading...
-      </div>
-    )
-  }
+  }, [dispatch]);
+
 
   return (
     <>
       <div className='Feed'>
-        <Virtuoso
-          style={{ height: 600 }}
-          data={data}
-          endReached={getPosts}
-          increaseViewportBy={10}
-          itemContent={(index) => {
-            return <div> <Post key={data[index].id} postData={data[index]} /></div>
-          }}
-          components={{ Footer }}
-        /> 
+        <VirtualList />
       </div>
     </>
   );

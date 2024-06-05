@@ -43,8 +43,10 @@ export default function MessageStream() {
     return (
         <div>
             <h2 className='title'>Messages:</h2>
-            <button className='button button-smaller' onClick={handleOpenConnection}>Get messages</button>
-            <button className='buttonClose' onClick={handleCloseConnection}>Close stream</button>
+            <span>
+                <button className='button button-smaller' onClick={handleOpenConnection}>Get messages</button>
+                <button className='buttonClose' onClick={handleCloseConnection}>Close stream</button>
+            </span>
             <div className='messagesContainer'>
                 {data.map(msg => <Message key={msg.id} val={msg.value} />)}
             </div>
