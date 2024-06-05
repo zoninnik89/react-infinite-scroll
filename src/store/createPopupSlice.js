@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+
 export const createPost = createAsyncThunk( 
     
     'createPostPopup/createPost',
     
-    async function (data) {
-        
+    async function (data, {getState}) {
         const sendUrl = 'https://10.59.62.240:3001/send';
+        console.log('start!')
 
         const post = JSON.stringify({
             id: data.id,
@@ -68,9 +69,26 @@ export const createPost = createAsyncThunk(
                     const start = i*chunkSize;
                     const end = (i + 1) * chunkSize;
                     await sendChunk(start, end);
+                }
+        }
+        
+    },
+    {
+        condition: ({getState}) => {
+
+            const {createPostPopup} = getState();
+            console.log(createPostPopup.status);
+    
+            if (createPostPopup.status === 'cancelled') {
+                return false
+            } else if (createPostPopup.status === 'paused') {
+                while(createPostPopup.status === 'paused'){
+                    continue
+                }
             }
         }
-});
+    }
+)
 
 const createPostPopupSlice = createSlice({
     name: 'createPostPopup',
@@ -87,7 +105,15 @@ const createPostPopupSlice = createSlice({
             state.showCreatePostPopup = 'false';
             state.status = 'init';
         },
-
+        pauseUpload(state, action) {
+            state.status = 'paused';
+        },
+        resumeUpload(state, action) {
+            state.status = 'uploading';
+        },
+        cancelUpload(state, action) {
+            state.status = 'cancelled';
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -106,5 +132,5 @@ const createPostPopupSlice = createSlice({
     }
 });
 
-export const {displayCreatePostPopup, hideCreatePostPopup} = createPostPopupSlice.actions;
+export const {displayCreatePostPopup, hideCreatePostPopup, pauseUpload, resumeUpload, cancelUpload} = createPostPopupSlice.actions;
 export default createPostPopupSlice.reducer;

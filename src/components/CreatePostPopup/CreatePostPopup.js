@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './CreatePostPopupStyles.css'; 
 import ReactDOM from 'react-dom';
 import { SubmitHandler, useForm } from 'react-hook-form'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { hideCreatePostPopup, createPost } from '../../store/createPopupSlice.js'
+import { hideCreatePostPopup, createPost, pauseUpload, resumeUpload, cancelUpload} from '../../store/createPopupSlice.js'
 
 export default function CreatePostPopup() {
 
@@ -12,21 +12,23 @@ export default function CreatePostPopup() {
     const { register, handleSubmit } = useForm();
     
     const dispatch = useDispatch();
-    const hidePopup = () => dispatch(hideCreatePostPopup());
 
-    function handleClose() {
-        hidePopup();
-        
-        return
-    }
+    const hidePopup = () => dispatch(hideCreatePostPopup());
+    const handlePause = () => dispatch(pauseUpload());
+    const handleCancel = () => dispatch(cancelUpload());
+    const handleResume = () => dispatch(resumeUpload());
 
     function onSubmit (data) {
         dispatch(createPost(data));
-        
+        console.log(status);
     }
 
+    function handleClose() {
+        hidePopup();
+        return
+    }
 
-    if (status == 'init') {
+    if (status === 'init') {
         return ReactDOM.createPortal(
             <div className="modal-wrapper">
                 <div className="modal">
@@ -82,10 +84,39 @@ export default function CreatePostPopup() {
             <div className="modal-wrapper">
                 <div className="modal">
                     <div className="body">
-                        <h2>Uploading... Don't close the popup</h2> 
+                        <h2>Uploading... Don't close the popup</h2>
+                        <button onClick={handlePause}>Pause upload</button>
+                        <button onClick={handleCancel}>Cancel Modal</button> 
                     </div>
                     <div className="footer">
                         <button onClick={handleClose}>Close Modal</button>
+                    </div>
+                </div>
+            </div>
+        )
+    } else if (status === 'cancelled') {
+        return (
+            <div className="modal-wrapper">
+                <div className="modal">
+                    <div className="body">
+                        <h2>Your upload was cancelled</h2>
+                    </div>
+                    <div className="footer">
+                        <button onClick={handleClose}>Close Modal</button>
+                    </div>
+                </div>
+            </div>
+        )
+    } else if (status === 'paused') {
+        return (
+            <div className="modal-wrapper">
+                <div className="modal">
+                    <div className="body">
+                        <h2>Your posting paused</h2> 
+                        <button onClick={handleResume}>Resume upload</button>
+                    </div>
+                    <div className="footer">
+                    <button onClick={handleClose}>Close Modal</button>
                     </div>
                 </div>
             </div>

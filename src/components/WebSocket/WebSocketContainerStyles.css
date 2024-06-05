@@ -1,10 +1,10 @@
 .WebSocketContainer {
-    padding: 0 25px;
+    padding: 0 0px;
     height: 300px;
     width: 300px;
     overflow-y: auto;
     margin-top: 2em;
-    margin-bottom: 5em;
+    margin-bottom: 2em;
     border: 1px solid black;
 }
 
@@ -68,7 +68,7 @@
 
   .WSform-input { 
     padding: 10px 10px; 
-    margin-bottom: 10px;
+    margin-bottom: 50px;
     margin-right: 15px;
     border: 1px solid #ccc; 
     border-radius: 8px; 

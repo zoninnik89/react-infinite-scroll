@@ -4,7 +4,6 @@ let coursor = 0;
 let limit = 5;
 
 const fetchUrl = `https://10.59.62.240:3001/infscrolldata?coursor=${coursor}&limit=${limit}`;
-const sendUrl = 'https://10.59.62.240:3001/send';
 
 export const fetchPosts = createAsyncThunk(
     
