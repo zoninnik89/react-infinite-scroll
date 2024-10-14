@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import LikeButton from './like';
-import './styles.css'; 
+import './FeedStyles.css'; 
 
 
 export default function Post({postData}) {

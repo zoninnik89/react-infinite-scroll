@@ -42,9 +42,9 @@ export default function Feed() {
   const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
   let renderedNodesCount = Math.floor(windowHeight / itemHeight) + 2 * overscan;
   renderedNodesCount = Math.min(numberOfItems - startIndex, renderedNodesCount);
-  console.log(`start index is ${startIndex}, nodes count is ${renderedNodesCount}`);
+  
   const posts = data === null ? [] : data.slice(startIndex, startIndex+renderedNodesCount);
-  console.log(`Posts are ${posts}`)
+
 
   const [isShowingModal, toggleModal] = useModal(null);
 

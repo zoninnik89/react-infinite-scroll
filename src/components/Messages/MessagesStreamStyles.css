@@ -1,0 +1,67 @@
+.messagesContainer {
+    padding: 0 25px;
+    height: 300px;
+    width: 300px;
+    overflow-y: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    border: 1px solid black;
+}
+
+.title {
+    margin: 0;
+    font-weight: 650;
+    font-size: 33px;
+    text-align: center;
+    display: inline-block;
+    padding-top: 25px;
+}
+
+.buttonClose {
+    appearance: button;
+    background-color: #1899d6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 10px;
+    margin: 0;
+    padding: 10px 6px;
+    text-align: center;
+    text-transform: uppercase;
+    transform: translateZ(0);
+    user-select: none;
+    -webkit-user-select: none;
+    width: 200px;
+  }
+
+  .button:main,
+  .button:focus {
+    user-select: auto;
+  }
+  
+  .button:hover:not(:disabled) {
+    filter: brightness(1.1);
+    -webkit-filter: brightness(1.1);
+  }
+  
+  .button:active:after {
+    background-color: #1899d6;
+  }
+  
+  .button-smaller {
+    display: block;
+    background-color: red;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 200px;
+  }
+  
+  .button-smaller:after {
+    background-color: rgb(255, 79, 79);
+  }
